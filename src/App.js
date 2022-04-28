@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Routes, Route } from "react-router-dom";
+import Main from "./Components/Main";
+import Navbar from "./Components/Navbar";
+import { HashRouter } from "react-router-dom";
+import CoinDetails from "./Components/CoinDetails";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HashRouter>
+      <Navbar />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/coindetails/:id" element={<CoinDetails />} />
+        </Routes>
+      </div>
+    </HashRouter>
   );
 }
 
