@@ -1,6 +1,16 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-function Coin({
+type Props = {
+  index: number;
+  name: string;
+  image: string;
+  price: string;
+  marketCap: string;
+  priceChange: number;
+  volume: string;
+  symbol: string;
+  id: string | undefined;
+};
+export const Coin = ({
   index,
   name,
   image,
@@ -10,7 +20,7 @@ function Coin({
   priceChange,
   symbol,
   id,
-}) {
+}: Props) => {
   const navigate = useNavigate();
   return (
     <tbody>
@@ -32,6 +42,4 @@ function Coin({
       </tr>
     </tbody>
   );
-}
-
-export default Coin;
+};

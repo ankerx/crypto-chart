@@ -1,9 +1,21 @@
 import React from "react";
-import Coin from "./Coin";
+import { Coin } from "./Coin";
 import { useState, useEffect } from "react";
+
+type Coins = {
+  id: string | undefined;
+  name: string;
+  image: string;
+  current_price: string;
+  price_change_percentage_24h: number;
+  total_volume: string;
+  market_cap: string;
+  symbol: string;
+};
+
 function Main() {
-  const [coinsData, setCoinsData] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [coinsData, setCoinsData] = useState<Coins[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
 
   const URL =
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false";
@@ -14,15 +26,16 @@ function Main() {
       .then((data) => setCoinsData(data))
       .catch((error) => console.log(error));
   }, []);
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const filteredCoins = coinsData.filter(
+  const filteredCoins: Coins[] = coinsData.filter(
     (coin) =>
       coin.name.toLowerCase().includes(inputValue.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(inputValue.toLowerCase())
   );
+  console.log(filteredCoins);
   return (
     <div className="container">
       <header className="header">
@@ -53,7 +66,7 @@ function Main() {
               return (
                 <Coin
                   id={coin.id}
-                  key={index}
+                  key={coin.id}
                   symbol={coin.symbol}
                   name={coin.name}
                   index={index}
