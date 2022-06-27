@@ -1,6 +1,6 @@
-import React from "react";
 import { Coin } from "./Coin";
 import { useState, useEffect } from "react";
+import { PagePagination } from "./PagePagination";
 
 type Coins = {
   id: string | undefined;
@@ -10,22 +10,23 @@ type Coins = {
   price_change_percentage_24h: number;
   total_volume: string;
   market_cap: string;
+  market_cap_rank: number;
   symbol: string;
 };
 
 function Main() {
   const [coinsData, setCoinsData] = useState<Coins[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
-
-  const URL =
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false";
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=false`;
 
   useEffect(() => {
     fetch(URL)
       .then((res) => res.json())
       .then((data) => setCoinsData(data))
       .catch((error) => console.log(error));
-  }, []);
+  }, [pageNumber, URL]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -35,11 +36,12 @@ function Main() {
       coin.name.toLowerCase().includes(inputValue.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(inputValue.toLowerCase())
   );
+
   console.log(filteredCoins);
   return (
     <div className="container">
       <header className="header">
-        <h3>Cryptocurrency Prices by Market Cap</h3>
+        <h3>Cryptocurrency prices sorted by market cap</h3>
         <form>
           <input
             type="text"
@@ -69,6 +71,7 @@ function Main() {
                   key={coin.id}
                   symbol={coin.symbol}
                   name={coin.name}
+                  rank={coin.market_cap_rank}
                   index={index}
                   image={coin.image}
                   price={coin.current_price}
@@ -79,6 +82,15 @@ function Main() {
               );
             })}
           </table>
+          {filteredCoins.length === 0 && (
+            <div>
+              <p className="p">We couldn't find this coin</p>
+            </div>
+          )}
+          <PagePagination
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+          />
         </div>
       </main>
     </div>

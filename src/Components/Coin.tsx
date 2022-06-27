@@ -5,13 +5,13 @@ type Props = {
   image: string;
   price: string;
   marketCap: string;
+  rank: number;
   priceChange: number;
   volume: string;
   symbol: string;
   id: string | undefined;
 };
 export const Coin = ({
-  index,
   name,
   image,
   price,
@@ -20,12 +20,13 @@ export const Coin = ({
   priceChange,
   symbol,
   id,
+  rank,
 }: Props) => {
   const navigate = useNavigate();
   return (
     <tbody>
       <tr onClick={() => navigate(`/coindetails/${id}`)}>
-        <th>{index + 1}</th>
+        <th>{rank}</th>
         <td className="box">
           <img src={image} alt={`${name}`} />
           <div>

@@ -46,10 +46,12 @@ function CoinDetails() {
             Current price ${coin.market_data.current_price.usd.toLocaleString()}
           </p>
           <p>
-            Twitter followers:
+            Twitter followers:{" "}
             {coin.community_data.twitter_followers.toLocaleString()}
           </p>
-          <p>{coin.links.homepage[0]}</p>
+          <a target="blank" href={coin.links.homepage[0]}>
+            {coin.links.homepage[0]}
+          </a>
           <div className="buttons">
             {buttons.map((btn, index) => {
               return (

@@ -13,9 +13,15 @@ html {
         sans-serif;
 }
 
+
 body {
     color: white;
     background-color: #212121
+}
+main {
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
 
 a {
@@ -45,13 +51,11 @@ nav li a {
     text-decoration: none;
 }
 
-main {
-    display: flex;
-    justify-content: center;
-}
 
 .coin-container {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-top: 2rem;
     overflow-x: scroll
 }
@@ -164,7 +168,7 @@ thead th {
 
 button {
     margin: 0 .3rem;
-    padding: .3rem .6rem;
+    padding: .4rem .8rem;
     font-size: 1rem;
     background-color: white;
     color: #3f51b5;
@@ -181,4 +185,20 @@ button:hover {
     .details-info p {
         max-width: 60%;
     }
+}
+ /* pagination  */
+
+.buttons {
+    margin: 1.5rem auto;
+
+}
+.current-page {
+    text-align: center;
+    margin: 0 .3rem;
+    padding: .4rem .8rem;
+    font-size: 1.2rem;
+    color:white
+}
+.p {
+    margin-top: 1rem;
 }

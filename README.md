@@ -1,35 +1,29 @@
-# Crypto app
+# 💰 Crypto chart
 
 See the website: https://ankerx.github.io/crypto-chart/
 
-Cryptocurrency dashboard. This app is created to see currently crypto prices by fetching data from coingecko API.
+Cryptocurrency dashboard. App created to see currently crypto prices by fetching data from coingecko API.
 
-## Description
+## 📦 Technologies
 
-You can check prices of top 10 cryptocurrencies
-When you click on particular coin you will be able to see some infromation about it and also chart displaying price data.
-You can see chart for 1, 30, 90 and 365 days.
+| Name       | Description                 |
+| ---------- | --------------------------- |
+| React      | javascript library          |
+| Typescript | for static typing           |
+| ChartJS    | library for creating charts |
 
-## Technologies
+## 💻 Features
 
-React
-React router
-ChartJS
-Axios
+The application retrieves data from the API and displays cryptocurrencies sorted by the largest market cap. It shows the basic information and statistics of a particular cryptocurrency and a graph at different time intervals. With pagination and search feature.
 
-### Installation
+### Setup
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/ankerx/crypto-chart.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
-3. Type
-   ```sh
-   npm start
-   ```
+Fork `main` branch into your personal repository. Clone it to local computer. Install node modules. Before starting development, you should check if there are any errors.
 
-## Wait for updates
+```sh
+$ git clone https://github.com/ankerx/crypto-chart.git
+$ npm install
+$ npm start
+```
+
+Happy hacking!
