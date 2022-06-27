@@ -1,6 +1,10 @@
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-export const ChartInfo = ({ chartData, days }) => {
+type Props = {
+  chartData: string[];
+  days: number;
+};
+export const ChartInfo = ({ chartData, days }: Props) => {
   return (
     <>
       <Line
