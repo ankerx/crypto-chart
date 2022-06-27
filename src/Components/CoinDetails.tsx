@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import parse from "html-react-parser";
 import { ChartInfo } from "./ChartInfo";
+import { historcalData } from "../utils/api";
 
 type Coin = {
   name: string;
@@ -10,31 +11,57 @@ type Coin = {
 };
 function CoinDetails() {
   const { id } = useParams();
-  const [coin, setCoin] = useState<Coin>();
-  const buttons: number[] = [1, 30, 90, 365];
-  const [chartData, setChartData] = useState<Array<string>>();
-  const [days, setDays] = useState<number>(1);
 
-  const url = `https://api.coingecko.com/api/v3/coins/${id}`;
-  const historcalData = (id: string | undefined, days: number) => {
-    return `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`;
+  const [coin, setCoin] = useState<Coin>();
+  const [chartData, setChartData] = useState<Array<string>>();
+
+  const [days, setDays] = useState<number>(1);
+  const [loading, setLoading] = useState(true);
+
+  const buttons: number[] = [1, 30, 90, 365];
+  const URL = `https://api.coingecko.com/api/v3/coins/${id}`;
+
+  const fetchHistoricalData = async () => {
+    try {
+      const { data } = await axios.get(historcalData(id, days));
+      setChartData(data.prices);
+      setLoading(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  };
+  const fetchCoinData = async () => {
+    try {
+      const { data } = await axios.get(URL);
+      setCoin(data);
+      setLoading(false);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
   };
 
   useEffect(() => {
-    axios.get(url).then((res) => setCoin(res.data));
-  }, [url]);
+    fetchHistoricalData();
+    fetchCoinData();
+  }, [days, id, URL]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get(historcalData(id, days));
-      setChartData(data.prices);
-    };
-    fetchData();
-  }, [days, id]);
   return (
     <div className="details-container">
       {coin && (
         <div className="details-info">
+          {loading && <p>Loading...</p>}
           <div>
             <img src={coin.image.large} alt={coin.name} />
           </div>
@@ -71,7 +98,7 @@ function CoinDetails() {
 
       <div className="details-chart">
         {!chartData ? (
-          <p>loading</p>
+          <p>loading...</p>
         ) : (
           <ChartInfo chartData={chartData} days={days} />
         )}

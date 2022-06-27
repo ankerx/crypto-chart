@@ -10,6 +10,7 @@ Cryptocurrency dashboard. App created to see currently crypto prices by fetching
 | ---------- | --------------------------- |
 | React      | javascript library          |
 | Typescript | for static typing           |
+| Axios      | handling http requests      |
 | ChartJS    | library for creating charts |
 
 ## 💻 Features

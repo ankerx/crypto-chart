@@ -18,13 +18,15 @@ function Main() {
   const [coinsData, setCoinsData] = useState<Coins[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [loading, setLoading] = useState(true);
   const URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=false`;
 
   useEffect(() => {
     fetch(URL)
       .then((res) => res.json())
       .then((data) => setCoinsData(data))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   }, [pageNumber, URL]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +54,7 @@ function Main() {
       </header>
       <main>
         <div className="coin-container">
+          {loading && <p>Loading...</p>}
           <table>
             <thead>
               <tr>
