@@ -23,6 +23,13 @@ function Main() {
 
   const URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=false`;
 
+  const nextPage = () => {
+    setPageNumber((prev) => prev + 1);
+  };
+  const previousPage = () => {
+    setPageNumber((prev) => prev - 1);
+  };
+
   const fetchCoinsData = async () => {
     try {
       const { data } = await axios.get(URL);
@@ -77,24 +84,25 @@ function Main() {
                 <th>Market Cap</th>
               </tr>
             </thead>
-
-            {filteredCoins.map((coin, index) => {
-              return (
-                <Coin
-                  id={coin.id}
-                  key={coin.id}
-                  symbol={coin.symbol}
-                  name={coin.name}
-                  rank={coin.market_cap_rank}
-                  index={index}
-                  image={coin.image}
-                  price={coin.current_price}
-                  priceChange={coin.price_change_percentage_24h}
-                  volume={coin.total_volume}
-                  marketCap={coin.market_cap}
-                />
-              );
-            })}
+            <tbody>
+              {filteredCoins.map((coin, index) => {
+                return (
+                  <Coin
+                    id={coin.id}
+                    key={coin.id}
+                    symbol={coin.symbol}
+                    name={coin.name}
+                    rank={coin.market_cap_rank}
+                    index={index}
+                    image={coin.image}
+                    price={coin.current_price}
+                    priceChange={coin.price_change_percentage_24h}
+                    volume={coin.total_volume}
+                    marketCap={coin.market_cap}
+                  />
+                );
+              })}
+            </tbody>
           </table>
           {filteredCoins.length === 0 && (
             <div>
@@ -102,8 +110,10 @@ function Main() {
             </div>
           )}
           <PagePagination
-            pageNumber={pageNumber}
             setPageNumber={setPageNumber}
+            pageNumber={pageNumber}
+            previousPage={previousPage}
+            nextPage={nextPage}
           />
         </div>
       </main>

@@ -25,7 +25,7 @@ export const Coin = ({
   const navigate = useNavigate();
 
   return (
-    <tbody>
+    <>
       <tr onClick={() => navigate(`/coindetails/${id}`)}>
         <th>{rank}</th>
         <td className="box">
@@ -42,6 +42,6 @@ export const Coin = ({
         <td>${volume.toLocaleString()}</td>
         <td>${marketCap.toLocaleString()}</td>
       </tr>
-    </tbody>
+    </>
   );
 };

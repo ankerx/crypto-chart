@@ -112,11 +112,11 @@ th {
     text-align: left;
 }
 
-tbody {
+tr {
     cursor: pointer;
 }
 
-tbody:hover {
+tr:hover {
     background-color: rgba(0, 0, 0, 0.3)
 }
 
@@ -124,8 +124,6 @@ thead th {
     padding: 1.5rem .5rem;
     border: none;
 }
-
-
 
 /*  coin info section */
 
