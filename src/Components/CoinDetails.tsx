@@ -16,7 +16,6 @@ function CoinDetails() {
   const [chartData, setChartData] = useState<Array<string>>();
 
   const [days, setDays] = useState<number>(1);
-  const [loading, setLoading] = useState(true);
 
   const buttons: number[] = [1, 30, 90, 365];
   const URL = `https://api.coingecko.com/api/v3/coins/${id}`;
@@ -25,7 +24,6 @@ function CoinDetails() {
     try {
       const { data } = await axios.get(historcalData(id, days));
       setChartData(data.prices);
-      setLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -40,7 +38,6 @@ function CoinDetails() {
     try {
       const { data } = await axios.get(URL);
       setCoin(data);
-      setLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -61,7 +58,6 @@ function CoinDetails() {
     <div className="details-container">
       {coin && (
         <div className="details-info">
-          {loading && <p>Loading...</p>}
           <div>
             <img src={coin.image.large} alt={coin.name} />
           </div>

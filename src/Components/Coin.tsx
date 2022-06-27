@@ -23,6 +23,7 @@ export const Coin = ({
   rank,
 }: Props) => {
   const navigate = useNavigate();
+
   return (
     <tbody>
       <tr onClick={() => navigate(`/coindetails/${id}`)}>

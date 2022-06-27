@@ -1,6 +1,7 @@
 import { Coin } from "./Coin";
 import { useState, useEffect } from "react";
 import { PagePagination } from "./PagePagination";
+import axios from "axios";
 
 type Coins = {
   id: string | undefined;
@@ -17,16 +18,28 @@ type Coins = {
 function Main() {
   const [coinsData, setCoinsData] = useState<Coins[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
+
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [loading, setLoading] = useState(true);
+
   const URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=false`;
 
+  const fetchCoinsData = async () => {
+    try {
+      const { data } = await axios.get(URL);
+      setCoinsData(data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  };
+
   useEffect(() => {
-    fetch(URL)
-      .then((res) => res.json())
-      .then((data) => setCoinsData(data))
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+    fetchCoinsData();
   }, [pageNumber, URL]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +52,6 @@ function Main() {
       coin.symbol.toLowerCase().includes(inputValue.toLowerCase())
   );
 
-  console.log(filteredCoins);
   return (
     <div className="container">
       <header className="header">
@@ -54,7 +66,6 @@ function Main() {
       </header>
       <main>
         <div className="coin-container">
-          {loading && <p>Loading...</p>}
           <table>
             <thead>
               <tr>
